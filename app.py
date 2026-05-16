@@ -28,6 +28,8 @@ st.markdown("""
     }
     .yukselis { color: #2ecc71; font-size: 2.5em; font-weight: bold; }
     .dusus    { color: #e74c3c; font-size: 2.5em; font-weight: bold; }
+    div[data-testid="stDateInput"] { max-width: 200px !important; }
+    div[data-testid="stButton"] > button { max-width: 150px !important; }
 </style>
 """, unsafe_allow_html=True)
 
