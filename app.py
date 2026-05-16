@@ -1,4 +1,3 @@
-
 import streamlit as st
 import yfinance as yf
 import pandas as pd
@@ -14,20 +13,12 @@ warnings.filterwarnings("ignore")
 
 st.set_page_config(
     page_title="Bitcoin Yön Tahmini",
+    page_icon="₿",
     layout="wide"
 )
 
 st.markdown("""
 <style>
-    .metric-card {
-        background: linear-gradient(135deg, #1a1a2e, #16213e);
-        border-radius: 12px;
-        padding: 25px;
-        text-align: center;
-        border: 1px solid #f39c12;
-    }
-    .yukselis { color: #2ecc71; font-size: 2.5em; font-weight: bold; }
-    .dusus    { color: #e74c3c; font-size: 2.5em; font-weight: bold; }
     div[data-testid="stDateInput"] { max-width: 200px !important; }
     div[data-testid="stButton"] > button { max-width: 150px !important; }
 </style>
@@ -137,7 +128,6 @@ def model_egit(_data):
     model.fit(X_train_esik, y_train_esik)
     return model, ozellik_sutunlar
 
-# ── Yükleme ──────────────────────────────────────────
 with st.spinner("Model yükleniyor, lütfen bekleyin..."):
     btc  = veri_hazirla()
     data = ozellik_uret(btc)
@@ -145,18 +135,11 @@ with st.spinner("Model yükleniyor, lütfen bekleyin..."):
     gosterim_isimleri = [ISIM_SOZLUK.get(c, c) for c in ozellik_sutunlar]
     explainer = shap.TreeExplainer(model)
 
-# ── Başlık ───────────────────────────────────────────
 st.title("Bitcoin Yön Tahmini")
-st.markdown("""
-Model, 2020'den bugüne kadar olan Bitcoin verisiyle eğitildi. Seçtiğiniz tarihe göre bir sonraki günün yönünü tahmin ediyor.
-
-Tahmin için %1 eşik değeri kullanılıyor — fiyat %1'den fazla artarsa yükseliş, %1'den fazla düşerse düşüş olarak değerlendiriliyor.
-
-
-
+st.write("Model, 2020'den bugüne kadar olan Bitcoin verisiyle eğitildi. Seçtiğiniz tarihe göre bir sonraki günün yönünü tahmin ediyor.")
+st.write("Tahmin için %1 eşik değeri kullanılıyor — fiyat %1'den fazla artarsa yükseliş, %1'den fazla düşerse düşüş olarak değerlendiriliyor.")
 st.divider()
 
-# ── Tarih seçimi ─────────────────────────────────────
 col1, col2, col3 = st.columns([1, 1, 4])
 with col1:
     tarih = st.date_input(
@@ -168,13 +151,11 @@ with col1:
 with col2:
     st.markdown("<br>", unsafe_allow_html=True)
     tahmin_btn = st.button("Tahmin Et", use_container_width=True, type="primary")
-
 with col3:
     pass
 
 st.divider()
 
-# ── Tahmin ───────────────────────────────────────────
 if tahmin_btn:
     tarih_ts = pd.Timestamp(tarih)
 
@@ -198,25 +179,22 @@ if tahmin_btn:
         else:
             gercek_str = "Yatay"
 
-        # Tahmin kartı
-        guven_str = str(round(guvenskor*100, 1))
-        if yon == 1:
-            st.success(f"YÜKSELİŞ — Güven: {guven_str}% — Gerçekte: {gercek_str}")
-        else:
-            st.error(f"DÜŞÜŞ — Güven: {guven_str}% — Gerçekte: {gercek_str}")
+        guven_str = str(round(guvenskor * 100, 1))
 
+        if yon == 1:
+            st.success("YÜKSELİŞ   |   Güven: " + guven_str + "%   |   Gerçekte: " + gercek_str)
+        else:
+            st.error("DÜŞÜŞ   |   Güven: " + guven_str + "%   |   Gerçekte: " + gercek_str)
 
         st.markdown("<br>", unsafe_allow_html=True)
 
-        # Fiyat metrikleri
         col_a, col_b, col_c = st.columns(3)
         col_a.metric("Başlangıç Fiyatı", f"${baslangic_fiyat:,.0f}")
-        col_b.metric("Tahmini Fiyat", f"${tahmini_fiyat:,.0f}", f"{chr(43) if yon==1 else chr(45)}%1.0")
+        col_b.metric("Tahmini Fiyat", f"${tahmini_fiyat:,.0f}", ("+" if yon == 1 else "-") + "%1.0")
         col_c.metric("Gerçek Fiyat", f"${gercek_fiyat:,.0f}", f"{gercek_degisim:+.2f}%")
 
         st.divider()
 
-        # Grafikler
         col_g1, col_g2 = st.columns(2)
 
         with col_g1:
@@ -242,12 +220,11 @@ if tahmin_btn:
             plt.close()
 
         with col_g2:
-            st.markdown("#### SHAP Açıklaması")
+            st.markdown("#### Tahmini Etkileyen Faktörler")
             shap_exp = explainer(X_gun)
             shap_exp.feature_names = gosterim_isimleri
             shap_vals = shap_exp[0].values
-            
-            # En etkili 10 özelliği al
+
             top_idx   = np.argsort(np.abs(shap_vals))[-10:]
             top_isim  = [gosterim_isimleri[i] for i in top_idx]
             top_deger = [shap_vals[i] for i in top_idx]
@@ -258,7 +235,7 @@ if tahmin_btn:
             ax2.set_facecolor("#0e1117")
             bars = ax2.barh(top_isim, top_deger, color=renkler)
             ax2.axvline(x=0, color="white", linewidth=0.8, alpha=0.5)
-            ax2.set_xlabel("Etkisi (pozitif = yükseliş, negatif = düşüş)", color="white", fontsize=9)
+            ax2.set_xlabel("Pozitif = yükseliş etkisi, Negatif = düşüş etkisi", color="white", fontsize=9)
             ax2.tick_params(colors="white")
             ax2.set_title("Tahmini Etkileyen Faktörler", color="white", fontsize=11, fontweight="bold")
             for i, (bar, val) in enumerate(zip(bars, top_deger)):
@@ -266,12 +243,8 @@ if tahmin_btn:
                     val / 2,
                     bar.get_y() + bar.get_height() / 2,
                     f"{abs(val):.2f}",
-                    va="center",
-                    ha="center",
-                    color="white",
-                    fontsize=8,
-                    fontweight="bold",
-                    fontfamily="DejaVu Sans"
+                    va="center", ha="center",
+                    color="white", fontsize=8, fontweight="bold"
                 )
             for spine in ax2.spines.values():
                 spine.set_edgecolor("#333")
@@ -281,16 +254,13 @@ if tahmin_btn:
 
         st.divider()
 
-        # En önemli 3 faktör
-        shap_vals = shap_exp[0].values
-        top3_idx  = np.argsort(np.abs(shap_vals))[-3:][::-1]
-
-        st.markdown("### En Önemli 3 Faktör")
+        top3_idx = np.argsort(np.abs(shap_vals))[-3:][::-1]
+        st.markdown("#### En Önemli 3 Faktör")
         for i, idx in enumerate(top3_idx, 1):
             isim   = gosterim_isimleri[idx]
             etki   = shap_vals[idx]
             yon_ok = "yükselişe katkı sağladı" if etki > 0 else "düşüşe katkı sağladı"
-            st.markdown(f"**{i}. {isim}** → {yon_ok}")
+            st.markdown(f"**{i}. {isim}** — {yon_ok}")
 
 st.divider()
 st.caption("Model: LightGBM | XAI: SHAP | Doğruluk: %77.6 | Veri: Yahoo Finance (2020-Bugün)")
