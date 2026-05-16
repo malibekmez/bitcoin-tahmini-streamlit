@@ -182,9 +182,21 @@ if tahmin_btn:
         guven_str = str(round(guvenskor * 100, 1))
 
         if yon == 1:
-            st.success("YÜKSELİŞ   |   Güven: " + guven_str + "%   |   Gerçekte: " + gercek_str)
+            st.markdown("""
+            <div style="background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:12px;padding:25px;text-align:center;border:1px solid #2ecc71;">
+                <div style="color:#2ecc71;font-size:2.5em;font-weight:bold;">YÜKSELİŞ</div>
+                <h3 style="color:white;margin:10px 0;">Güven: """ + guven_str + """%</h3>
+                <p style="color:#aaa;font-size:1.1em;">Gerçekte: """ + gercek_str + """</p>
+            </div>
+            """, unsafe_allow_html=True)
         else:
-            st.error("DÜŞÜŞ   |   Güven: " + guven_str + "%   |   Gerçekte: " + gercek_str)
+            st.markdown("""
+            <div style="background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:12px;padding:25px;text-align:center;border:1px solid #e74c3c;">
+                <div style="color:#e74c3c;font-size:2.5em;font-weight:bold;">DÜŞÜŞ</div>
+                <h3 style="color:white;margin:10px 0;">Güven: """ + guven_str + """%</h3>
+                <p style="color:#aaa;font-size:1.1em;">Gerçekte: """ + gercek_str + """</p>
+            </div>
+            """, unsafe_allow_html=True)
 
         st.markdown("<br>", unsafe_allow_html=True)
 
