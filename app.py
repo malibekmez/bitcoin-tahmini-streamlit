@@ -273,14 +273,15 @@ if tahmin_btn:
             ax2.set_title("Tahmini Etkileyen Faktörler", color="white", fontsize=11, fontweight="bold")
             for i, (bar, val) in enumerate(zip(bars, top_deger)):
                 ax2.text(
-                    val + (0.02 if val >= 0 else -0.02),
+                    val / 2,
                     bar.get_y() + bar.get_height() / 2,
-                    f"{val:+.2f}",
+                    f"{abs(val):.2f}",
                     va="center",
-                    ha="left" if val >= 0 else "right",
+                    ha="center",
                     color="white",
                     fontsize=8,
-                    fontweight="bold"
+                    fontweight="bold",
+                    fontfamily="DejaVu Sans"
                 )
             for spine in ax2.spines.values():
                 spine.set_edgecolor("#333")
