@@ -146,7 +146,7 @@ with st.spinner("Model yükleniyor, lütfen bekleyin..."):
     explainer = shap.TreeExplainer(model)
 
 # ── Başlık ───────────────────────────────────────────
-st.title("₿ Bitcoin Yön Tahmini")
+st.title("Bitcoin Yön Tahmini")
 st.markdown("""
 Model ertesi gün Bitcoin fiyatının **%1'den fazla** yükselip yükselmeyeceğini tahmin ediyor.
 
