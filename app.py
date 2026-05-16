@@ -199,22 +199,12 @@ if tahmin_btn:
             gercek_str = "Yatay"
 
         # Tahmin kartı
+        guven_str = str(round(guvenskor*100, 1))
         if yon == 1:
-            st.markdown(f"""
-            <div class="metric-card">
-                <div class="yukselis">YÜKSELİŞ</div>
-                <h3 style="color:white">Güven: ' + str(round(guvenskor*100, 1)) + '%</h3>
-                <p style="color:#aaa; font-size:1.1em">Gerçekte: {gercek_str}</p>
-            </div>
-            """, unsafe_allow_html=True)
+            st.success(f"YÜKSELİŞ — Güven: {guven_str}% — Gerçekte: {gercek_str}")
         else:
-            st.markdown(f"""
-            <div class="metric-card">
-                <div class="dusus">DÜŞÜŞ</div>
-                <h3 style="color:white">Güven: ' + str(round(guvenskor*100, 1)) + '%</h3>
-                <p style="color:#aaa; font-size:1.1em">Gerçekte: {gercek_str}</p>
-            </div>
-            """, unsafe_allow_html=True)
+            st.error(f"DÜŞÜŞ — Güven: {guven_str}% — Gerçekte: {gercek_str}")
+
 
         st.markdown("<br>", unsafe_allow_html=True)
 
