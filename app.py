@@ -155,7 +155,7 @@ Model ertesi gün Bitcoin fiyatının **%1'den fazla** yükselip yükselmeyeceğ
 st.divider()
 
 # ── Tarih seçimi ─────────────────────────────────────
-col1, col2 = st.columns([3, 1])
+col1, col2 = st.columns([2, 1])
 with col1:
     tarih = st.date_input(
         "Tarih Seç",
@@ -165,7 +165,7 @@ with col1:
     )
 with col2:
     st.markdown("<br>", unsafe_allow_html=True)
-    tahmin_btn = st.button("Tahmin Et 🚀", use_container_width=True, type="primary")
+    tahmin_btn = st.button("Tahmin Et", use_container_width=True, type="primary")
 
 st.divider()
 
