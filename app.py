@@ -232,7 +232,10 @@ if tahmin_btn:
             ax1.set_ylabel("Fiyat (USD)", color="white")
             ax1.tick_params(colors="white")
             ax1.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"${x:,.0f}"))
-            ax1.tick_params(axis="x", rotation=45)
+            import matplotlib.dates as mdates
+            ax1.xaxis.set_major_locator(mdates.WeekdayLocator(interval=1))
+            ax1.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
+            ax1.tick_params(axis="x", rotation=30)
             ax1.legend(facecolor="#1a1a2e", labelcolor="white")
             for spine in ax1.spines.values():
                 spine.set_edgecolor("#333")
