@@ -3,7 +3,7 @@
 Model, 2020'den bugüne kadar olan Bitcoin verisiyle eğitildi. Seçilen tarihe göre bir sonraki günün yönünü tahmin ediyor.
 
 ## Canlı Uygulama
-[bitcoin-yon-tahmini.streamlit.app](https://bitcoin-yon-tahmini.streamlit.app)
+👉 [bitcoin-yon-tahmini.streamlit.app](https://bitcoin-yon-tahmini.streamlit.app)
 
 ## Nasıl Çalışır?
 Tahmin için %1 eşik değeri kullanılıyor — fiyat %1'den fazla artarsa yükseliş, %1'den fazla düşerse düşüş olarak değerlendiriliyor.
@@ -32,4 +32,4 @@ Tahmin için %1 eşik değeri kullanılıyor — fiyat %1'den fazla artarsa yük
 `Python` `LightGBM` `SHAP` `Streamlit` `yfinance` `pandas` `matplotlib`
 
 ## Geliştirici
-[LinkedIn](https://linkedin.com/in/malibekmez)
+[LinkedIn](https://www.linkedin.com/in/mehmet-ali-bekmez-866b7a294/)
