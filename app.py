@@ -181,22 +181,31 @@ if tahmin_btn:
 
         guven_str = str(round(guvenskor * 100, 1))
 
-        if yon == 1:
-            st.markdown("""
-            <div style="background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:12px;padding:25px;text-align:center;border:1px solid #2ecc71;">
-                <div style="color:#2ecc71;font-size:2.5em;font-weight:bold;">YÜKSELİŞ</div>
-                <h3 style="color:white;margin:10px 0;">Güven: """ + guven_str + """%</h3>
-                <p style="color:#aaa;font-size:1.1em;">Gerçekte: """ + gercek_str + """</p>
-            </div>
-            """, unsafe_allow_html=True)
+        # Doğru mu yanlış mı?
+        if yon == 1 and gercek_str == "Yükseliş":
+            dogru = True
+        elif yon == 0 and gercek_str == "Düşüş":
+            dogru = True
         else:
-            st.markdown("""
-            <div style="background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:12px;padding:25px;text-align:center;border:1px solid #e74c3c;">
-                <div style="color:#e74c3c;font-size:2.5em;font-weight:bold;">DÜŞÜŞ</div>
-                <h3 style="color:white;margin:10px 0;">Güven: """ + guven_str + """%</h3>
-                <p style="color:#aaa;font-size:1.1em;">Gerçekte: """ + gercek_str + """</p>
-            </div>
-            """, unsafe_allow_html=True)
+            dogru = False
+
+        bg_renk  = "linear-gradient(135deg,#1a4a1a,#0d2b0d)" if dogru else "linear-gradient(135deg,#4a1a1a,#2b0d0d)"
+        bdr_renk = "#2ecc71" if dogru else "#e74c3c"
+
+        if yon == 1:
+            tahmin_yazisi = "YÜKSELİŞ"
+            tahmin_renk   = "#2ecc71"
+        else:
+            tahmin_yazisi = "DÜŞÜŞ"
+            tahmin_renk   = "#e74c3c"
+
+        st.markdown("""
+        <div style="background:""" + bg_renk + """;border-radius:12px;padding:25px;text-align:center;border:2px solid """ + bdr_renk + """;">
+            <div style="color:""" + tahmin_renk + """;font-size:2.5em;font-weight:bold;">""" + tahmin_yazisi + """</div>
+            <h3 style="color:white;margin:10px 0;">Güven: """ + guven_str + """%</h3>
+            <p style="color:#ddd;font-size:1.1em;">Gerçekte: """ + gercek_str + """</p>
+        </div>
+        """, unsafe_allow_html=True)
 
         st.markdown("<br>", unsafe_allow_html=True)
 
