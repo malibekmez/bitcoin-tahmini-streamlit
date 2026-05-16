@@ -255,8 +255,24 @@ if tahmin_btn:
             st.markdown("#### SHAP Açıklaması")
             shap_exp = explainer(X_gun)
             shap_exp.feature_names = gosterim_isimleri
-            fig2, ax2 = plt.subplots(figsize=(8, 4))
-            shap.waterfall_plot(shap_exp[0], max_display=10, show=False)
+            shap_vals = shap_exp[0].values
+            
+            # En etkili 10 özelliği al
+            top_idx   = np.argsort(np.abs(shap_vals))[-10:]
+            top_isim  = [gosterim_isimleri[i] for i in top_idx]
+            top_deger = [shap_vals[i] for i in top_idx]
+            renkler   = ["#e74c3c" if v > 0 else "#3498db" for v in top_deger]
+
+            fig2, ax2 = plt.subplots(figsize=(8, 5))
+            fig2.patch.set_facecolor("#0e1117")
+            ax2.set_facecolor("#0e1117")
+            bars = ax2.barh(top_isim, top_deger, color=renkler)
+            ax2.axvline(x=0, color="white", linewidth=0.8, alpha=0.5)
+            ax2.set_xlabel("Etkisi (pozitif = yükseliş, negatif = düşüş)", color="white", fontsize=9)
+            ax2.tick_params(colors="white")
+            ax2.set_title("Tahmini Etkileyen Faktörler", color="white", fontsize=11, fontweight="bold")
+            for spine in ax2.spines.values():
+                spine.set_edgecolor("#333")
             plt.tight_layout()
             st.pyplot(fig2)
             plt.close()
