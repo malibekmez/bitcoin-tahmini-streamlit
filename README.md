@@ -30,6 +30,13 @@ Tahmin için %1 eşik değeri kullanılıyor — fiyat %1'den fazla artarsa yük
 
 ## Teknolojiler
 `Python` `LightGBM` `SHAP` `Streamlit` `yfinance` `pandas` `matplotlib`
+## Görseller
+
+### Model Karşılaştırması
+![Model Karşılaştırması](model_karsilastirma.png)
+
+### SHAP Özellik Önemi
+![SHAP](shap_bar.png)
 
 ## Geliştirici
 [LinkedIn](https://www.linkedin.com/in/mehmet-ali-bekmez-866b7a294/)
