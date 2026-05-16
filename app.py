@@ -203,7 +203,7 @@ if tahmin_btn:
             st.markdown(f"""
             <div class="metric-card">
                 <div class="yukselis">YÜKSELİŞ</div>
-                <h3 style="color:white">Güven: {guvenskor*100:.1f}%</h3>
+                <h3 style="color:white">Güven: ' + str(round(guvenskor*100, 1)) + '%</h3>
                 <p style="color:#aaa; font-size:1.1em">Gerçekte: {gercek_str}</p>
             </div>
             """, unsafe_allow_html=True)
@@ -211,7 +211,7 @@ if tahmin_btn:
             st.markdown(f"""
             <div class="metric-card">
                 <div class="dusus">DÜŞÜŞ</div>
-                <h3 style="color:white">Güven: {guvenskor*100:.1f}%</h3>
+                <h3 style="color:white">Güven: ' + str(round(guvenskor*100, 1)) + '%</h3>
                 <p style="color:#aaa; font-size:1.1em">Gerçekte: {gercek_str}</p>
             </div>
             """, unsafe_allow_html=True)
