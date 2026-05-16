@@ -148,12 +148,12 @@ with st.spinner("Model yükleniyor, lütfen bekleyin..."):
 # ── Başlık ───────────────────────────────────────────
 st.title("Bitcoin Yön Tahmini")
 st.markdown("""
-Model ertesi gün Bitcoin fiyatının **%1'den fazla** yükselip yükselmeyeceğini tahmin ediyor.
-
- **Yükseliş**: Ertesi gün fiyat %1'den fazla arttı &nbsp;&nbsp; 
- **Düşüş**: Ertesi gün fiyat %1'den fazla azaldı &nbsp;&nbsp; 
- **Yatay**: Fiyat ±%1 aralığında kaldı
+Model, 2020'den bugüne kadar olan Bitcoin verisiyle eğitildi. Seçtiğiniz tarihe göre bir sonraki günün yönünü tahmin ediyor. Tahmin için %1 eşik değeri kullanılıyor — fiyat %1'den fazla artarsa yükseliş, %1'den fazla düşerse düşüş olarak değerlendiriliyor.
 """)
+
+
+
+
 st.divider()
 
 # ── Tarih seçimi ─────────────────────────────────────
