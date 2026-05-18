@@ -195,8 +195,7 @@ if tahmin_btn:
         else:
             dogru = False
 
-        bg_renk  = "linear-gradient(135deg,#1a4a1a,#0d2b0d)" if dogru else "linear-gradient(135deg,#4a1a1a,#2b0d0d)"
-        bdr_renk = "#2ecc71" if dogru else "#e74c3c"
+        cizgi_renk = "#2ecc71" if dogru else "#e74c3c"
 
         if yon == 1:
             tahmin_yazisi = "YÜKSELİŞ"
@@ -206,10 +205,9 @@ if tahmin_btn:
             tahmin_renk   = "#e74c3c"
 
         st.markdown("""
-        <div style="background:""" + bg_renk + """;border-radius:12px;padding:25px;text-align:center;border:2px solid """ + bdr_renk + """;">
-            <div style="color:""" + tahmin_renk + """;font-size:2.5em;font-weight:bold;">""" + tahmin_yazisi + """</div>
-            <h3 style="color:white;margin:10px 0;">Güven: """ + guven_str + """%</h3>
-            <p style="color:#ddd;font-size:1.1em;">Gerçekte: """ + gercek_str + """</p>
+        <div style="background:#0e1117;border-left:4px solid """ + cizgi_renk + """;padding:15px 25px;">
+            <div style="color:""" + tahmin_renk + """;font-size:1.8em;font-weight:bold;">""" + tahmin_yazisi + """</div>
+            <div style="color:#999;font-size:0.95em;margin-top:5px;">Güven: <span style="color:white;">""" + guven_str + """%</span> &nbsp;·&nbsp; Gerçekte: <span style="color:white;">""" + gercek_str + """</span></div>
         </div>
         """, unsafe_allow_html=True)
 
