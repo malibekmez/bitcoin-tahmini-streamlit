@@ -120,11 +120,15 @@ def model_egit(_data):
     train_mask   = y_train_esik != -1
     X_train_esik = X_train[train_mask]
     y_train_esik = y_train_esik[train_mask]
-    model = lgb.LGBMClassifier(
+    from sklearn.calibration import CalibratedClassifierCV
+    
+    base_model = lgb.LGBMClassifier(
         n_estimators=1000, learning_rate=0.05,
         num_leaves=32, feature_fraction=0.8,
         bagging_fraction=0.8, bagging_freq=5, verbose=-1
     )
+    
+    model = CalibratedClassifierCV(base_model, method="isotonic", cv=5)
     model.fit(X_train_esik, y_train_esik)
     return model, ozellik_sutunlar
 
@@ -133,7 +137,9 @@ with st.spinner("Model yükleniyor, lütfen bekleyin..."):
     data = ozellik_uret(btc)
     model, ozellik_sutunlar = model_egit(data)
     gosterim_isimleri = [ISIM_SOZLUK.get(c, c) for c in ozellik_sutunlar]
-    explainer = shap.TreeExplainer(model)
+    # SHAP için calibrated modelin içindeki base estimator'u kullan
+    base_for_shap = model.calibrated_classifiers_[0].estimator
+    explainer = shap.TreeExplainer(base_for_shap)
 
 st.title("Bitcoin Yön Tahmini")
 st.write("Model, 2020'den bugüne kadar olan Bitcoin verisiyle eğitildi. Seçtiğiniz tarihe göre bir sonraki günün yönünü tahmin ediyor.")
